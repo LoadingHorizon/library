@@ -18,8 +18,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 
-namespace hl
-{
+namespace hl {
 
 class Configure {
 typedef std::map<std::string, boost::any> MapStrAny;

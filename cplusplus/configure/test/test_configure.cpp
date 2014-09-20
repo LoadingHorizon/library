@@ -20,10 +20,10 @@ class test_Configure_suite : public ::testing::Test{
         test_Configure_suite(){};
         virtual ~test_Configure_suite(){};
         virtual void SetUp() {
-            //Called befor every TEST_F(test_Configure_suite, *)
+            // nothing to do
         };
         virtual void TearDown() {
-            //Called after every TEST_F(test_Configure_suite, *)
+            // nothing to do
         };
 };
 
