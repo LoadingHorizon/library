@@ -11,7 +11,7 @@
 
 #define CFG_LOG(fmt, arg...) \
     do { \
-        fprintf(stderr, "[%s:%d][%s] "fmt, __FILE__, __LINE__, __FUNCTION__, ##arg); \
+        fprintf(stderr, "[%s:%d][%s] "fmt"\n", __FILE__, __LINE__, __FUNCTION__, ##arg); \
     } while (0)
 
 #define CFG_FATAL(fmt, arg...) CFG_LOG(fmt, ##arg)
@@ -23,4 +23,4 @@
 #define CFG_DEBUG(fmt, arg...) CFG_LOG(fmt, ##arg)
 #endif  // NDEBUG
 
-#endif
+#endif // LH_CFG_CONFIG_DEFINE_H
