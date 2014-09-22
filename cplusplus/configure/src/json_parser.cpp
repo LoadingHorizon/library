@@ -14,9 +14,12 @@
 
 #include <boost/algorithm/string.hpp>
 
-namespace hl {
+#include "config_define.h"
 
+namespace lh {
+namespace cfg {
 
+// 解析配置文件path/name到container中
 int JsonParser::parse(
         const std::string& path, 
         const std::string& name, 
@@ -26,6 +29,7 @@ int JsonParser::parse(
     file.open((path + "/" + name).c_str(), std::ifstream::in);
 
     if (!file.good()) {
+        CFG_FATAL("open file[%s/%s] failed.", path.c_str(), name.c_str());
         return -1;
     }
 
@@ -33,17 +37,29 @@ int JsonParser::parse(
 
     // 读取配置文件，分析文件中的语法元素
     std::list<std::string> elements;
+    int line_num = 0;
     while (file.good()) {
+        line_num++;
         file.getline(line_buff, kMaxLineLength);
         std::string line(line_buff);
-        _analysis_line(line, elements);
+        if (_analysis_line(line, elements) != 0) {
+            CFG_FATAL("analysis line %d failed.", line_num);
+        }
     }
 
     // 解析语法元素
-    return _process_parser(elements, container);
+    if (_process_parser(elements, container) != 0) {
+        CFG_FATAL("parser failed.");
+        return -1;
+    }
+
+    return 0;
 }
 
-int JsonParser::_analysis_line(const std::string line, std::list<std::string>& elements)
+// 分析一行
+int JsonParser::_analysis_line(
+        const std::string line,
+        std::list<std::string>& elements)
 {
     int pos = 0;
     for (size_t i = 0; i < line.size(); i++) {
@@ -68,6 +84,7 @@ int JsonParser::_analysis_line(const std::string line, std::list<std::string>& e
             while (line[++i] != quot || line[i - 1] == '\\') {
                 // 没有找到对应的引号，退出
                 if (line[i] == '\0') {
+                    CFG_FATAL("quot[%c] is not match.", quot);
                     return -1;
                 }
             }
@@ -77,11 +94,13 @@ int JsonParser::_analysis_line(const std::string line, std::list<std::string>& e
         // 注释，忽略//后面的字符
         } else if (line[i] == '/') {
             if (line[++i] != '/') {
+                CFG_FATAL("expect \'/\' after \'/\' if you want comment.");
                 return -1;
             }
             break;
         // 解析出错
         } else {
+            CFG_FATAL("parser failed.");
             return -1;
         }
     }
@@ -89,6 +108,7 @@ int JsonParser::_analysis_line(const std::string line, std::list<std::string>& e
     return 0;
 }
 
+// 解析配置到一个map中
 int JsonParser::_process_parser_map(
         std::list<std::string>& elements,
         boost::any& container)
@@ -107,6 +127,7 @@ int JsonParser::_process_parser_map(
         // 获取冒号
         std::string colon = elements.front();
         if (colon != ":") {
+            CFG_FATAL("expect \":\" after key[%s]", key.c_str());
             return -1;
         }
         elements.pop_front();
@@ -116,6 +137,7 @@ int JsonParser::_process_parser_map(
         if (value == "{" || value == "[") {
             map_str_any[key] = boost::any();
             if (_process_parser(elements, map_str_any[key]) != 0) {
+                CFG_FATAL("parser map failed.");
                 return -1;
             }
         } else {
@@ -132,7 +154,8 @@ int JsonParser::_process_parser_map(
                 container = map_str_any;
                 return 0;
             }
-
+            
+            CFG_FATAL("expect \",\" after");
             return -1;
         }
         elements.pop_front();
@@ -142,6 +165,7 @@ int JsonParser::_process_parser_map(
     return 0;
 }
 
+// 解析配置到一个vector中
 int JsonParser::_process_parser_vec(
         std::list<std::string>& elements,
         boost::any& container)
@@ -160,6 +184,7 @@ int JsonParser::_process_parser_vec(
         if (value == "{" || value == "[") {
             vector_any.push_back(boost::any());
             if (_process_parser(elements, vector_any[idx]) != 0) {
+                CFG_FATAL("parser vector failed.");
                 return -1;
             }
             idx++;
@@ -178,6 +203,7 @@ int JsonParser::_process_parser_vec(
                 return 0;
             }
 
+            CFG_FATAL("expect \",\" after");
             return -1;
         }
         elements.pop_front();
@@ -187,6 +213,7 @@ int JsonParser::_process_parser_vec(
     return 0;
 }
 
+// 解析配置到一个boost::any中
 int JsonParser::_process_parser(
         std::list<std::string>& elements,
         boost::any& container)
@@ -195,13 +222,16 @@ int JsonParser::_process_parser(
     elements.pop_front();
     if (current == "{") {
         if (_process_parser_map(elements, container) != 0) {
+            CFG_FATAL("parse map failed.");
             return -1;
         }
     } else if (current == "[") {
         if (_process_parser_vec(elements, container) != 0) {
+            CFG_FATAL("parse vector failed.");
             return -1;
         }
     } else {
+        CFG_FATAL("parse failed.");
         return -1;
     }
 
@@ -226,4 +256,5 @@ bool JsonParser::_is_identifier_character(char ch)
 
 const int JsonParser::kMaxLineLength = 1024;
 
-}  // hl
+}  // cfg
+}  // lh

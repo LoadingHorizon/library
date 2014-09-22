@@ -29,13 +29,13 @@ class test_Configure_suite : public ::testing::Test{
 
 TEST_F(test_Configure_suite, load_case)
 {
-    hl::Configure conf;
+    lh::cfg::Configure conf;
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 }
  
 TEST_F(test_Configure_suite, get_string_case)
 {
-    hl::Configure conf;
+    lh::cfg::Configure conf;
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string description;
@@ -53,7 +53,7 @@ TEST_F(test_Configure_suite, get_string_case)
  
 TEST_F(test_Configure_suite, map_case)
 {
-    hl::Configure conf;
+    lh::cfg::Configure conf;
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string author_name;
@@ -67,7 +67,7 @@ TEST_F(test_Configure_suite, map_case)
 
 TEST_F(test_Configure_suite, vector_case)
 {
-    hl::Configure conf;
+    lh::cfg::Configure conf;
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string maintainers_1_name;
@@ -81,7 +81,7 @@ TEST_F(test_Configure_suite, vector_case)
 
 TEST_F(test_Configure_suite, operator_case)
 {
-    hl::Configure conf;
+    lh::cfg::Configure conf;
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string maintainers_1_name;
