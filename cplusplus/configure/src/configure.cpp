@@ -126,5 +126,25 @@ Configure Configure::operator[](const std::string& key_path)
     return Configure(anything);
 }
 
+int Configure::size()
+{
+    try {
+        if (typeid(VectorAny) == _data.type()) {
+            return boost::any_cast<VectorAny>(_data).size();
+        } else if (typeid(MapStrAny) == _data.type()) {
+            return boost::any_cast<MapStrAny>(_data).size();
+        } else if (typeid(std::string) == _data.type()) {
+            return 1;
+        } else {
+            return -1;
+        }
+    } catch (boost::bad_any_cast& e) {
+        CFG_WARNING("boost any cast failed. %s.", e.what());
+        return -1;
+    }
+
+    return 0;
+}
+
 }  // cfg
 }  // lh

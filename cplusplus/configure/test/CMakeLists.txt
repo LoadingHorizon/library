@@ -17,6 +17,10 @@ LINK_DIRECTORIES(
     "../../../../../third-64/boost/lib"
     "../../../../../third-64/gtest/lib"
 )
+ADD_DEFINITIONS(
+    -Dprivate=public
+    -Dproctect=public
+)
 ADD_EXECUTABLE(test_configure ${SRC_LIST})
 TARGET_LINK_LIBRARIES(test_configure
     libboost_atomic.a
@@ -25,7 +29,7 @@ TARGET_LINK_LIBRARIES(test_configure
     libgtest_main.a
     pthread
 )
-ADD_CUSTOM_TARGET(output
+ADD_CUSTOM_TARGET(configure
     mkdir -p bin &&
     cp test_configure ./bin &&
     cp -r ${SRC_PATH}/../conf . &&
@@ -33,7 +37,7 @@ ADD_CUSTOM_TARGET(output
     cp -r ./conf output &&
     cp -r ./bin output
 )
-ADD_CUSTOM_TARGET(removeall
+ADD_CUSTOM_TARGET(clear
     rm -rf bin &&
     rm -rf conf &&
     rm -rf output

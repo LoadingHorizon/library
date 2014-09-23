@@ -62,6 +62,10 @@ public:
     //
     // @return 0成功，-1失败
     template <typename T> int fetch(std::string key_path, T &value);
+    // @desc 配置项的个数
+    //
+    // @return 配置项的个数
+    int size();
 
 private:
     // 配置的内存结构
