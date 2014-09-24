@@ -1,7 +1,7 @@
 // Copyright (c) 2014 LoadingHorizion. All Rights Reserved
 //
 // @file logger_define.h
-// @desc loggerºê¶¨Òå
+// @desc loggerå®å®šä¹‰
 // @auth hatlonely(hatlonely@gmail.com)
 // @vers 1.0
 // @date 2014-09-22
