@@ -10,12 +10,14 @@ SET(SRC_LIST
 #SET(SRC_LIST ${SRC_DIR} ${TEST_DIR})
 INCLUDE_DIRECTORIES(
     "../include"
-    "../../../../../third-64/boost/include"
-    "../../../../../third-64/gtest/include"
+#	"../../../../../third-64/boost/include"
+#   "../../../../../third-64/gtest/include"
+    "../../../../../google/gtest/gtest-1.6.0/include"
 )
 LINK_DIRECTORIES(
-    "../../../../../third-64/boost/lib"
-    "../../../../../third-64/gtest/lib"
+#    "../../../../../third-64/boost/lib"
+#    "../../../../../third-64/gtest/lib"
+    "../../../../../google/gtest/gtest-1.6.0/lib"
 )
 ADD_DEFINITIONS(
     -Dprivate=public
@@ -23,10 +25,8 @@ ADD_DEFINITIONS(
 )
 ADD_EXECUTABLE(test_configure ${SRC_LIST})
 TARGET_LINK_LIBRARIES(test_configure
-    libboost_atomic.a
-    libboost_regex.a
-    libgtest.a
-    libgtest_main.a
+	boost_regex
+    gtest
     pthread
 )
 ADD_CUSTOM_TARGET(configure

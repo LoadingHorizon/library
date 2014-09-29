@@ -9,6 +9,7 @@
 #ifndef LH_CFG_CONFIGURE_PARSER_H
 #define LH_CFG_CONFIGURE_PARSER_H
 
+#include <string>
 #include <boost/any.hpp>
 
 namespace lh {
