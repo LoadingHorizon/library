@@ -171,13 +171,14 @@ void Logger::log(uint64_t level, const char* format, ...)
     // 获取当前时间
     time_t time_now = time(0);
     strftime(_time_buffer, kTimeBufferSize, "%Y-%m-%d %H:%M:%S", localtime(&time_now));
-    snprintf(_format_buffer, kFormatBufferSize, "%s: [%s] %s",
-            _logger_level_strings[level].c_str(), _time_buffer, format);
 
     va_list parglist;
-    va_start(parglist, _format_buffer);
-    vsnprintf(_log_buffer, kLogBufferSize, _format_buffer, parglist);
+    va_start(parglist, format);
+    vsnprintf(_format_buffer, kLogBufferSize, format, parglist);
     va_end(parglist);
+
+    snprintf(_log_buffer, kFormatBufferSize, "%s: [%s] %s",
+            _logger_level_strings[level].c_str(), _time_buffer, _format_buffer);
 
     for (std::vector<logger_info_t>::iterator it = _logger_infos.begin();
             it != _logger_infos.end(); ++it) {
