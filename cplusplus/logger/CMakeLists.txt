@@ -7,8 +7,9 @@ SET(SRC_LIST
 )
 
 INCLUDE_DIRECTORIES(
-    "../configure/include"
     "./include"
+    "../../../../loadinghorizion/configure/configure-1.0.0/include"
+    "../../../../third/boost/boost-1.56.0/include"
 )
 
 ADD_LIBRARY(lh_logger ${SRC_LIST})

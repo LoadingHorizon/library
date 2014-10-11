@@ -9,15 +9,15 @@ SET(SRC_LIST
 
 INCLUDE_DIRECTORIES(
     "../include"
-    "../../../../../boost/boost-1.56.0/include"
-    "../../../../../google/gtest/gtest-1.6.0/include"
     "../../../../../loadinghorizion/configure/configure-1.0.0/include"
+    "../../../../../third/boost/boost-1.56.0/include"
+    "../../../../../google/gtest/gtest-1.6.0/include"
 )
 
 LINK_DIRECTORIES(
-    "../../../../../boost/boost-1.56.0/lib"
-    "../../../../../google/gtest/gtest-1.6.0/lib"
     "../../../../../loadinghorizion/configure/configure-1.0.0/lib"
+    "../../../../../third/boost/boost-1.56.0/lib"
+    "../../../../../google/gtest/gtest-1.6.0/lib"
 )
 
 ADD_DEFINITIONS(

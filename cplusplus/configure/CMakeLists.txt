@@ -9,6 +9,7 @@ SET(SRC_LIST
 
 INCLUDE_DIRECTORIES(
     "./include"
+    "../../../../third/boost/boost-1.56.0/include"
 )
 
 ADD_LIBRARY(lh_configure ${SRC_LIST})
