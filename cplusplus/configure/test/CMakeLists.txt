@@ -1,11 +1,15 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(LH_CONFIGURE_TEST)
 
+SET(CMAKE_VERBOSE_MAKEFILE OFF)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+SET(CMAKE_CXX_FLAGS "-g -pipe -W -Wall -fPIC")
 
+AUX_SOURCE_DIRECTORY(../src SOURCES)
+AUX_SOURCE_DIRECTORY(. TEST_SOURCES)
 SET(SRC_LIST
-    "../src/configure.cpp"
-    "../src/json_parser.cpp"
-    "./test_configure.cpp"
+    ${SOURCES}
+    ${TEST_SOURCES}
 )
 
 INCLUDE_DIRECTORIES(
@@ -24,16 +28,14 @@ ADD_DEFINITIONS(
     -Dproctect=public
 )
 
-ADD_EXECUTABLE(test_configure ${SRC_LIST})
+ADD_EXECUTABLE(lh_configure_test ${SRC_LIST})
 
-TARGET_LINK_LIBRARIES(test_configure
-    boost_regex
-    gtest
-    pthread
+TARGET_LINK_LIBRARIES(lh_configure_test
 )
 
 ADD_CUSTOM_COMMAND(
-    TARGET test_configure
+    TARGET lh_configure_test
     POST_BUILD
-    COMMAND cp -r ${LH_CONFIGURE_TEST_SOURCE_DIR}/../conf .
+    COMMAND echo "${LH_CONFIGURE_TEST_SOURCE_DIR}"
+    COMMAND echo "${LH_CONFIGURE_TEST_BINARY_DIR}"
 )

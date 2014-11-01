@@ -1,15 +1,19 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(LH_CONFIGURE)
 
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+SET(CMAKE_VERBOSE_MAKEFILE OFF)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+SET(CMAKE_CXX_FLAGS "-g -pipe -W -Wall -fPIC")
 
+AUX_SOURCE_DIRECTORY(src SOURCES)
 SET(SRC_LIST
-    "./src/configure.cpp"
-    "./src/json_parser.cpp"
+    ${SOURCES}
 )
 
 INCLUDE_DIRECTORIES(
     "./include"
-    "../../../../third/boost/boost-1.56.0/include"
+    "../../../../../third/boost/boost-1.56.0/include"
+    "../../../../../google/gtest/gtest-1.6.0/include"
 )
 
 ADD_LIBRARY(lh_configure ${SRC_LIST})
