@@ -14,13 +14,13 @@ SET(SRC_LIST
 
 INCLUDE_DIRECTORIES(
     "../include"
-    "../../../../../third/boost/boost-1.56.0/include"
-    "../../../../../google/gtest/gtest-1.6.0/include"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../third/boost/boost-1.56.0/include"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../google/gtest/gtest-1.6.0/include"
 )
 
 LINK_DIRECTORIES(
-    "../../../../../third/boost/boost-1.56.0/lib"
-    "../../../../../google/gtest/gtest-1.6.0/lib"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../third/boost/boost-1.56.0/lib"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../google/gtest/gtest-1.6.0/lib"
 )
 
 ADD_DEFINITIONS(
@@ -31,11 +31,13 @@ ADD_DEFINITIONS(
 ADD_EXECUTABLE(lh_configure_test ${SRC_LIST})
 
 TARGET_LINK_LIBRARIES(lh_configure_test
+    boost_regex
+    gtest
+    pthread
 )
 
 ADD_CUSTOM_COMMAND(
     TARGET lh_configure_test
     POST_BUILD
-    COMMAND echo "${LH_CONFIGURE_TEST_SOURCE_DIR}"
-    COMMAND echo "${LH_CONFIGURE_TEST_BINARY_DIR}"
+    COMMAND cp -r ${LH_CONFIGURE_TEST_SOURCE_DIR}/../conf .
 )
