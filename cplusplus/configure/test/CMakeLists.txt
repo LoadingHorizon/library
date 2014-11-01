@@ -2,25 +2,23 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(LH_CONFIGURE_TEST)
 
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+SET(EXECUTABLE_OUTPUT_PATH ${LH_CONFIGURE_TEST_BINARY_DIR}/bin)
 SET(CMAKE_CXX_FLAGS "-g -pipe -W -Wall -fPIC")
+SET(WORK_ROOT "../../../../..")
 
 AUX_SOURCE_DIRECTORY(../src SOURCES)
 AUX_SOURCE_DIRECTORY(. TEST_SOURCES)
-SET(SRC_LIST
-    ${SOURCES}
-    ${TEST_SOURCES}
-)
+SET(SRC_LIST ${SOURCES} ${TEST_SOURCES})
 
 INCLUDE_DIRECTORIES(
     "../include"
-    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../third/boost/boost-1.56.0/include"
-    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../google/gtest/gtest-1.6.0/include"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/${WORK_ROOT}/third/boost/boost-1.56.0/include"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/${WORK_ROOT}/google/gtest/gtest-1.6.0/include"
 )
 
 LINK_DIRECTORIES(
-    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../third/boost/boost-1.56.0/lib"
-    "${LH_CONFIGURE_TEST_SOURCE_DIR}/../../../../../google/gtest/gtest-1.6.0/lib"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/${WORK_ROOT}/third/boost/boost-1.56.0/lib"
+    "${LH_CONFIGURE_TEST_SOURCE_DIR}/${WORK_ROOT}/google/gtest/gtest-1.6.0/lib"
 )
 
 ADD_DEFINITIONS(
